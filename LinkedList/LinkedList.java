@@ -43,7 +43,7 @@ public class LinkedList {
                 current = current.next;
             }
             System.out.println("null");
-            System.out.println("Size of linked list is "+size);
+            System.out.println("Size of linked list is " + size);
         }
     }
 
@@ -54,7 +54,7 @@ public class LinkedList {
         for (int i = 20; i <= 80; i = i + 10) {
             innerLinkedList.addLast(i);
         }
-        
+
         innerLinkedList.print();
     }
 

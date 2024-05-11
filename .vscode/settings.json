@@ -1,3 +1,7 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "files.autoSaveDelay": 2000,
+    "java.format.onType.enabled": true,
+    "java.format.enabled": true,
+    "java.format.comments.enabled": true
 }
