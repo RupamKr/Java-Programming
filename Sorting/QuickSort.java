@@ -9,9 +9,9 @@ public class QuickSort {
 
     public static void main(String[] arg) {
 
-        int array[] = new int[10];
+        int array[] = new int[10000000];
         for (int i = 0; i < array.length; i++) {
-            array[i] = SortingUtils.generateRandomNumber(101);
+            array[i] = SortingUtils.generateRandomNumber(10000);
         }
         System.out.print("Before Sort ");
         printArray(array);
