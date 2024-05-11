@@ -2,6 +2,8 @@ package Sorting;
 
 import java.util.Arrays;
 
+import DateAndTimeUtils.TimeUtils;
+
 /**
  * BubbleSort
  */
@@ -9,11 +11,15 @@ public class BubbleSort {
 
     public static void main(String[] arg) {
 
-        int[] a = { 2, 1, 4, 0, 3 };
+        int[] a = new int[100000];
+        long startTime = TimeUtils.getTimeInSeconds();
+        for (int i = 0; i < a.length; i++) {
+            a[i] = SortingUtils.generateRandomNumber(10000);
+        }
 
         bubbleSort(a);
-
         System.out.println(Arrays.toString(a));
+        TimeUtils.printTotalTimeTaken(startTime);
     }
 
     public static void bubbleSort(int[] array) {

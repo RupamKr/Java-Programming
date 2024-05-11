@@ -2,6 +2,8 @@ package Sorting;
 
 import java.util.Arrays;
 
+import DateAndTimeUtils.TimeUtils;
+
 /**
  * MergeSort
  */
@@ -9,10 +11,19 @@ public class MergeSort {
 
     public static void main(String[] args) {
 
-        int a[] = { 34, -2, 45, 29, 8, -10, 19 };
+        int a[] = new int[100000];
+        long startTime = TimeUtils.getTimeInSeconds();
+        for (int i = 0; i < a.length; i++) {
+            a[i] = SortingUtils.generateRandomNumber(10000);
+        }
 
-        mergeSort(0, a.length - 1, a);
+        mergeSort(a);
         System.out.println(Arrays.toString(a));
+        TimeUtils.printTotalTimeTaken(startTime);
+    }
+
+    public static void mergeSort(int a[]) {
+        mergeSort(0, a.length - 1, a);
     }
 
     public static void mergeSort(int beg, int end, int[] array) {

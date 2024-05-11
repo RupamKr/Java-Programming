@@ -1,6 +1,7 @@
 package Sorting;
 
 import java.util.Arrays;
+import DateAndTimeUtils.TimeUtils;
 
 /**
  * QuickSort
@@ -9,21 +10,25 @@ public class QuickSort {
 
     public static void main(String[] arg) {
 
-        int array[] = new int[10000000];
+        int array[] = new int[100000];
+        long startTime = TimeUtils.getTimeInSeconds();
         for (int i = 0; i < array.length; i++) {
             array[i] = SortingUtils.generateRandomNumber(10000);
         }
-        System.out.print("Before Sort ");
-        printArray(array);
+
+        // System.out.print("Before Sort ");
+        // printArray(array);
 
         quickSort(array);
+        
 
         System.out.print("After Sort ");
         printArray(array);
+        TimeUtils.printTotalTimeTaken(startTime);
     }
 
-    public static void quickSort(int array[]){
-        quickSort(array, 0, array.length-1);
+    public static void quickSort(int array[]) {
+        quickSort(array, 0, array.length - 1);
     }
 
     public static void quickSort(int array[], int beg, int end) {
