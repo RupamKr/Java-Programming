@@ -67,20 +67,20 @@ public class LinkedList {
                 // size--;
             }
         }
-        
-        void removeLast(){
-            if(size==0){
+
+        void removeLast() {
+            if (size == 0) {
                 System.out.println("Linked List is empty");
-            }else if(size==1){
-                head=tail=null;
+            } else if (size == 1) {
+                head = tail = null;
                 size--;
-            }else{
+            } else {
                 Node current = head;
-                for(int i=1; i<size-1; i++){
-                    current=current.next;
+                for (int i = 1; i < size - 1; i++) {
+                    current = current.next;
                 }
                 tail = current;
-                tail.next=null;
+                tail.next = null;
                 size--;
             }
         }
@@ -133,6 +133,38 @@ public class LinkedList {
             }
         }
 
+        private Node getNodeAt(int index) {
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            return current;
+        }
+
+        // here we are playing with data of linked list only
+        //we are iterative through data, and then reverse it
+        void reverseLinkedListDataIterative() {
+            int right = size - 1;
+            int left = 0;
+            while (left < right) {
+                Node leftNode = getNodeAt(left);
+                Node rightNode = getNodeAt(right);
+                swap(leftNode, rightNode);
+                left++;
+                right--;
+            }
+        }
+
+        void swap(Node node1, Node node2) {
+            int temp = node1.data;
+            node1.data = node2.data;
+            node2.data = temp;
+        }
+
+        void reverseLinkedListPointerIterative(){
+
+        }
+
         void initilizeLinkedList() {
             addFirst(10);
             for (int i = 20; i <= 80; i += 10) {
@@ -144,6 +176,8 @@ public class LinkedList {
     public static void main(String[] args) {
         InnerLinkedList innerLinkedList = new InnerLinkedList();
         innerLinkedList.initilizeLinkedList();
+        innerLinkedList.print();
+        innerLinkedList.reverseLinkedListPointerIterative();
         innerLinkedList.print();
     }
 
