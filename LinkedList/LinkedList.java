@@ -162,7 +162,19 @@ public class LinkedList {
         }
 
         void reverseLinkedListPointerIterative(){
+            Node previous = null;
+            Node current = head;
+            while(current!=null){
+                Node saveNextNode = current.next;
 
+                current.next = previous;//previous ab current ke next ko point kr rha
+                previous = current; // prev ko utha ke current pe daal diyaa
+                current = saveNextNode; //current ko aage move kiya 
+            }
+            //swap the head and tail
+            Node temp = head;
+            head = tail;
+            tail = temp;
         }
 
         void initilizeLinkedList() {
