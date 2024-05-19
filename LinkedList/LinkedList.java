@@ -70,7 +70,7 @@ public class LinkedList {
 
         void removeLast() {
             if (size == 0) {
-                System.out.println("Linked List is empty");
+                printErrorMessage("Linked List is empty");
             } else if (size == 1) {
                 head = tail = null;
                 size--;
@@ -119,7 +119,7 @@ public class LinkedList {
                 addLast(value);
             } else if (index < 0 || index > size) {
                 String errorMessage = index < 0 ? "Index must be positive integer" : "Invalid argument";
-                System.out.println(errorMessage);
+                printErrorMessage(errorMessage);
             } else {
                 Node current = head;
                 for (int i = 0; i < index - 1; i++) {
@@ -142,7 +142,7 @@ public class LinkedList {
         }
 
         // here we are playing with data of linked list only
-        //we are iterative through data, and then reverse it
+        // we are iterative through data, and then reverse it
         void reverseLinkedListDataIterative() {
             int right = size - 1;
             int left = 0;
@@ -161,20 +161,42 @@ public class LinkedList {
             node2.data = temp;
         }
 
-        void reverseLinkedListPointerIterative(){
+        void reverseLinkedListPointerIterative() {
             Node previous = null;
             Node current = head;
-            while(current!=null){
+            while (current != null) {
                 Node saveNextNode = current.next;
 
-                current.next = previous;//previous ab current ke next ko point kr rha
+                current.next = previous;// previous ab current ke next ko point kr rha
                 previous = current; // prev ko utha ke current pe daal diyaa
-                current = saveNextNode; //current ko aage move kiya 
+                current = saveNextNode; // current ko aage move kiya
             }
-            //swap the head and tail
+            // swap the head and tail
             Node temp = head;
             head = tail;
             tail = temp;
+        }
+
+        void removeAt(int index) {
+            if (size == 0) {
+                printErrorMessage("LinkedList is empty");
+            } else if (index < 0 || index >= size) {
+                printErrorMessage("Invalid argument: index must be in between [0-" + (getSize() - 1)+"]");
+            } else if (index == 0) {
+                removeFirst();
+            } else if (index == size - 1) {
+                removeLast();
+            } else {
+                Node previous = null;
+                Node current = head;
+                for (int i = 0; i < index; i++) {
+                    previous = current;
+                    current = current.next;
+                }
+                previous.next = current.next;
+                current = null; // hels garbage collection
+                size--;
+            }
         }
 
         void initilizeLinkedList() {
@@ -183,13 +205,17 @@ public class LinkedList {
                 addLast(i);
             }
         }
+
+        void printErrorMessage(String message) {
+            System.out.println(message);
+        }
     }
 
     public static void main(String[] args) {
         InnerLinkedList innerLinkedList = new InnerLinkedList();
         innerLinkedList.initilizeLinkedList();
         innerLinkedList.print();
-        innerLinkedList.reverseLinkedListPointerIterative();
+        innerLinkedList.removeAt(-1);
         innerLinkedList.print();
     }
 
