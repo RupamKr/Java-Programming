@@ -217,9 +217,25 @@ public class LinkedList {
             }
         }
 
+        Node getMiddleNodeOfLinkedList() {
+            //here fast pointer is moving two times over the linked list
+            //and slow pointer is moving one time, so at last slow pointer will return middle node
+            if (size == 0) {
+                throw new IllegalArgumentException("List is empty");
+            } else {
+                Node slow = head;
+                Node fast = head; 
+                while (fast.next != null && fast.next.next != null) {
+                    fast = fast.next.next;
+                    slow = slow.next;
+                }
+                return slow;
+            }
+        }
+
         void initilizeLinkedList() {
             addFirst(10);
-            for (int i = 20; i <= 80; i += 10) {
+            for (int i = 20; i <= 100; i += 10) {
                 addLast(i);
             }
         }
@@ -233,13 +249,6 @@ public class LinkedList {
         InnerLinkedList innerLinkedList = new InnerLinkedList();
         innerLinkedList.initilizeLinkedList();
         innerLinkedList.print();
-        try {
-            Node result = innerLinkedList.kthNodeFromEnd(1);
-            System.out.println(result.data);
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        }
-        // innerLinkedList.print();
     }
 
 }
