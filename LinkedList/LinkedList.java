@@ -1,5 +1,7 @@
 package LinkedList;
 
+import Sorting.SortingUtils;
+
 public class LinkedList {
 
     public static class Node {
@@ -218,13 +220,14 @@ public class LinkedList {
         }
 
         Node getMiddleNodeOfLinkedList() {
-            //here fast pointer is moving two times over the linked list
-            //and slow pointer is moving one time, so at last slow pointer will return middle node
+            // here fast pointer is moving two times over the linked list
+            // and slow pointer is moving one time, so at last slow pointer will return
+            // middle node
             if (size == 0) {
                 throw new IllegalArgumentException("List is empty");
             } else {
                 Node slow = head;
-                Node fast = head; 
+                Node fast = head;
                 while (fast.next != null && fast.next.next != null) {
                     fast = fast.next.next;
                     slow = slow.next;
@@ -233,10 +236,68 @@ public class LinkedList {
             }
         }
 
+        Node midNode(Node head, Node tail) {
+            Node fast = head;
+            Node slow = head;
+            while (fast != tail && fast.next != tail) {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+            return slow;
+        }
+
+        InnerLinkedList mergeTwoSortedLinkedList(InnerLinkedList l1, InnerLinkedList l2) {
+            Node one = l1.head;
+            Node two = l2.head;
+
+            InnerLinkedList result = new InnerLinkedList();
+
+            while (one != null && two != null) {
+                if (one.data < two.data) {
+                    result.addLast(one.data);
+                    one = one.next;
+                } else {
+                    result.addLast(two.data);
+                    two = two.next;
+                }
+            }
+
+            while (one != null) {
+                result.addLast(one.data);
+                one = one.next;
+            }
+
+            while (two != null) {
+                result.addLast(two.data);
+                two = two.next;
+            }
+
+            return result;
+        }
+
+        InnerLinkedList mergeSort(Node head, Node tail) {
+            if (head == tail) {
+                InnerLinkedList baseResult = new InnerLinkedList();
+                baseResult.addLast(head.data);
+                return baseResult;
+            }
+
+            Node mid = midNode(head, tail);
+            InnerLinkedList leftLinkedList = mergeSort(head, mid);
+            InnerLinkedList rightLinkedList = mergeSort(mid.next, tail);
+
+            InnerLinkedList resultLinkedList = mergeTwoSortedLinkedList(leftLinkedList, rightLinkedList);
+            return resultLinkedList;
+        }
+
+        void removeDuplicateFromSortedLinkedList(Node head, Node tail){
+
+            
+        }
         void initilizeLinkedList() {
-            addFirst(10);
-            for (int i = 20; i <= 100; i += 10) {
-                addLast(i);
+            addFirst(1);
+            for (int i = 2; i <= 10; i++) {
+                addLast(SortingUtils.generateRandomNumber(6));
             }
         }
 
@@ -248,7 +309,10 @@ public class LinkedList {
     public static void main(String[] args) {
         InnerLinkedList innerLinkedList = new InnerLinkedList();
         innerLinkedList.initilizeLinkedList();
-        innerLinkedList.print();
+        // innerLinkedList.print();
+        // linkedList after merge sort
+        InnerLinkedList result = innerLinkedList.mergeSort(innerLinkedList.head, innerLinkedList.tail);
+        result.print();
     }
 
 }
