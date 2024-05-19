@@ -181,7 +181,7 @@ public class LinkedList {
             if (size == 0) {
                 printErrorMessage("LinkedList is empty");
             } else if (index < 0 || index >= size) {
-                printErrorMessage("Invalid argument: index must be in between [0-" + (getSize() - 1)+"]");
+                printErrorMessage("Invalid argument: index must be in between [0-" + (getSize() - 1) + "]");
             } else if (index == 0) {
                 removeFirst();
             } else if (index == size - 1) {
@@ -196,6 +196,24 @@ public class LinkedList {
                 previous.next = current.next;
                 current = null; // hels garbage collection
                 size--;
+            }
+        }
+
+        Node kthNodeFromEnd(int k) {
+            if (k > size || k <= 0) {
+                throw new IllegalArgumentException("k is out of bound");
+            } else {
+                Node fast = head;
+                Node slow = head;
+                for (int i = 0; i < k; i++) { // here fast will move k times
+                    fast = fast.next;
+                }
+
+                while (fast != null) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
             }
         }
 
@@ -215,8 +233,13 @@ public class LinkedList {
         InnerLinkedList innerLinkedList = new InnerLinkedList();
         innerLinkedList.initilizeLinkedList();
         innerLinkedList.print();
-        innerLinkedList.removeAt(-1);
-        innerLinkedList.print();
+        try {
+            Node result = innerLinkedList.kthNodeFromEnd(1);
+            System.out.println(result.data);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
+        // innerLinkedList.print();
     }
 
 }
