@@ -1,12 +1,15 @@
 package LinkedList;
 
-import Sorting.SortingUtils;
-
 public class LinkedList {
 
     public static class Node {
         int data;
         Node next;
+
+        @Override
+        public String toString() {
+            return "Node@" + Integer.toHexString(System.identityHashCode(this));
+        }
     }
 
     public static class InnerLinkedList {
@@ -45,6 +48,21 @@ public class LinkedList {
                 current = current.next;
             }
             System.out.println("null");
+        }
+
+        void printDataAndAddress() {
+            Node current = head;
+            while (current != null) {
+                System.out.print(current.data + "|");
+
+                if (current.next != null) {
+                    System.out.print(current.next.toString() + " -> ");
+                } else {
+                    System.out.print("null");
+                }
+
+                current = current.next;
+            }
         }
 
         int getSize() {
@@ -290,14 +308,29 @@ public class LinkedList {
             return resultLinkedList;
         }
 
-        void removeDuplicateFromSortedLinkedList(Node head, Node tail){
+        void removeDuplicateFromSortedLinkedList(Node head, Node tail) {
+            if (size == 0)
+                return;
 
-            
+            InnerLinkedList result = new InnerLinkedList();
+
+            while (this.size > 0) {
+                int val = this.getFirstValueOfLinkedList();
+                this.removeFirst();
+                if (result.size == 0 || result.getLastValueOfLinkedList() != val) {
+                    result.addLast(val);
+                }
+            }
+
+            this.head = result.head;
+            this.tail = result.tail;
+            this.size = result.size;
         }
+
         void initilizeLinkedList() {
-            addFirst(1);
-            for (int i = 2; i <= 10; i++) {
-                addLast(SortingUtils.generateRandomNumber(6));
+            addFirst(10);
+            for (int i = 20; i <= 100; i += 10) {
+                addLast(i);
             }
         }
 
@@ -309,10 +342,9 @@ public class LinkedList {
     public static void main(String[] args) {
         InnerLinkedList innerLinkedList = new InnerLinkedList();
         innerLinkedList.initilizeLinkedList();
-        // innerLinkedList.print();
-        // linkedList after merge sort
-        InnerLinkedList result = innerLinkedList.mergeSort(innerLinkedList.head, innerLinkedList.tail);
-        result.print();
+        innerLinkedList.print();
+        // innerLinkedList.removeDuplicateFromSortedLinkedList(innerLinkedList.head,
+        // innerLinkedList.tail);
     }
 
 }
