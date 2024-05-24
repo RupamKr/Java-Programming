@@ -1,8 +1,8 @@
-package Sorting;
+package sorting;
 
 import java.util.Arrays;
 
-import DateAndTimeUtils.TimeUtils;
+import dateAndTimeUtils.TimeUtils;
 
 /**
  * BubbleSort

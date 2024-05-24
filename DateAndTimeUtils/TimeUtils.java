@@ -1,4 +1,4 @@
-package DateAndTimeUtils;
+package dateAndTimeUtils;
 
 import java.util.Date;
 

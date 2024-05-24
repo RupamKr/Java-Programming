@@ -1,14 +1,14 @@
-package Strings;
+package strings;
 
 public class StringManupulation {
     
     public static void main(String[] arg){
 
         String s1 = new String("Dog");
-        String s2 = "Cat";
-        String sInterned = s1.intern();
+        String s2 = "Dog";
+        // String sInterned = s1.intern();
 
-        System.out.println(sInterned==s1);
+        // System.out.println(sInterned==s1);
         /*
         Returns a canonical representation for the string object.
         A pool of strings, initially empty, is maintained privately by the class String.
@@ -20,18 +20,12 @@ public class StringManupulation {
         is true if and only if s.equals(t) is true.
          */
 
-        // if(s1==s2){
-        //     System.out.println("True");
-        // }else{
-        //     System.out.println("False");
-        // }
+        if(s1==s2){
+            System.out.println("1st"+"True");
+        }
 
         if(s2.equals(s1)){
             System.out.println("True");
-        }else{
-            System.out.println("False");
-        }
-
-        
+        } 
     }
 }
