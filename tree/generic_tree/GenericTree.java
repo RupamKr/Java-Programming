@@ -47,6 +47,10 @@ public class GenericTree {
     }
 
     public static void display(Node node) {
+        /*
+         * 1 we store the root and there child
+         * 2 then we call display to all child
+         */
         String str = node.data + "->";
         for (Node child : node.children) {
             str += child.data + ", ";
@@ -84,10 +88,54 @@ public class GenericTree {
         return count;
     }
 
+    public static int findMax(Node root) {
+        int max = Integer.MIN_VALUE;
+        for (Node child : root.children) {
+            int mc = findMax(child);
+            max = Math.max(mc, max);
+        }
+        max = Math.max(root.data, max);
+        return max;
+    }
+
+    public static int findMin(Node root) {
+        int min = Integer.MAX_VALUE;
+        for (Node child : root.children) {
+            int mc = findMin(child);
+            min = Math.min(mc, min);
+        }
+        min = Math.min(root.data, min);
+        return min;
+    }
+
+    public static int height(Node root) {
+        if (root == null)
+            return 0;
+        int ht = -1;
+        for (Node child : root.children) {
+            int hc = height(child);
+            ht = Math.max(ht, hc);
+        }
+        ht += 1;
+        return ht;
+    }
+
+    public static void traversal(Node root) {
+        System.out.println("Node pre-->" + root.data);
+        for (Node child : root.children) {
+            System.out.println("Edge pre " + root.data + "-->" + child.data);
+            traversal(child);
+            System.out.println("Edge post " + root.data + "-->" + child.data);
+        }
+        System.out.println("Node post-->" + root.data);
+    }
+
     public static void main(String[] args) {
-        int[] a = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1 };
+        // int[] a = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1,
+        // 90, -1, -1, 40, 100, -1, -1, -1 };
+        int[] a = { 10, 20, -1, 30, -1, -1 };
 
         Node root = tree(a);
-        display(root);
+        System.out.println(height(root));
     }
 }
