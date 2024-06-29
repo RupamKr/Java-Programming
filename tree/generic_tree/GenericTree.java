@@ -1,7 +1,11 @@
 package tree.generic_tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
+
+import javax.management.Query;
 
 public class GenericTree {
     private static class Node {
@@ -130,12 +134,93 @@ public class GenericTree {
         System.out.println("Node post-->" + root.data);
     }
 
+    public static void levelOrderTraversal(Node root) {
+        /*
+         * Logic
+         * remove from queue
+         * print
+         * add child of current node
+         */
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            Node removedNode = q.remove();
+            System.out.print(removedNode.data + " ");
+            for (Node child : removedNode.children) {
+                q.add(child);
+            }
+        }
+    }
+
+    public static void levelOrderTraversalLineWise(Node root) {
+        /*
+         * pq = parentQueue
+         * cq = childQueue
+         */
+        Queue<Node> pq = new LinkedList<>();
+        pq.add(root);
+        Queue<Node> cq = new LinkedList<>();
+        while (!pq.isEmpty()) {
+            Node removedNode = pq.remove();
+            System.out.print(removedNode.data + " ");
+            for (Node child : removedNode.children) {
+                cq.add(child);
+            }
+            if (pq.isEmpty()) {
+                pq = cq;
+                cq = new LinkedList<>();
+                System.out.println();
+            }
+            /*
+             * logic inside if()
+             * once parent queue is empty
+             * we copy all the child queue into the parent queue
+             * and change the line
+             */
+        }
+    }
+
+    public static void levelOrderLineWiseZigZagTraversal(Node root) {
+        /*
+         * ps -> parent stack
+         * cs -> child stack
+         */
+        Stack<Node> ps = new Stack<>();
+        ps.add(root);
+
+        Stack<Node> cs = new Stack<>();
+        int level = 1;
+        while (!ps.isEmpty()) {
+            Node removedNode = ps.pop();
+            int size = removedNode.children.size();
+            System.out.print(removedNode.data + " ");
+            if (level % 2 == 1) {
+                for (int i = 0; i < size; i++) {
+                    cs.add(removedNode.children.get(i));
+                }
+            } else {
+                for (int i = size - 1; i >= 0; i--) {
+                    cs.add(removedNode.children.get(i));
+                }
+            }
+
+            if (ps.isEmpty()) {
+                ps = cs;
+                cs = new Stack<>();
+                System.out.println();
+                level++;
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        // int[] a = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1,
-        // 90, -1, -1, 40, 100, -1, -1, -1 };
-        int[] a = { 10, 20, -1, 30, -1, -1 };
+        int[] a = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1,
+                90, -1, -1, 40, 100, -1, -1, -1 };
+        // int[] a = { 10, 20, -1, 30, -1, -1 };
 
         Node root = tree(a);
-        System.out.println(height(root));
+        levelOrderTraversalLineWise(root);
+        System.out.println();
+        levelOrderLineWiseZigZagTraversal(root);
     }
 }
