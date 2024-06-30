@@ -1,19 +1,22 @@
 package tree.generic_tree;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
-
-import javax.management.Query;
 
 public class GenericTree {
     private static class Node {
         int data;
         ArrayList<Node> children = new ArrayList<>();
 
-        private Node(int val) {
-            this.data = val;
+        private Node() {
+        }
+
+        private Node(int data) {
+            this.data = data;
         }
     }
 
@@ -213,14 +216,82 @@ public class GenericTree {
         }
     }
 
+    public static void levelOrderTraversalLineWise2(Node root) {
+        Queue<Node> pq = new LinkedList<>();
+        pq.add(root);
+        pq.add(null);
+        while (!pq.isEmpty()) {
+            Node removedNode = pq.remove();
+            if (removedNode != null) {
+                System.out.print(removedNode.data + " ");
+                for (Node child : removedNode.children) {
+                    pq.add(child);
+                }
+            } else {
+                if (!pq.isEmpty()) {
+                    pq.add(null);
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    public static void levelOrderTraversalLineWise3(Node root) {
+        // count method
+        Queue<Node> pq = new LinkedList<>();
+        pq.add(root);
+        while (!pq.isEmpty()) {
+            int size = pq.size();
+            for (int i = 0; i < size; i++) {
+                Node removNode = pq.remove();
+                System.out.print(removNode.data + " ");
+                for (Node child : removNode.children) {
+                    pq.add(child);
+                }
+                // remove, print, add;
+            }
+            System.out.println();
+        }
+    }
+
+    public static void mirrorOfAGenericTree(Node root) {
+        // we use recursion here
+        // I will put faith in mirrorOfAGenericTree function that, this function knows
+        // to print the mirror of there child
+        for (Node child : root.children) {
+            mirrorOfAGenericTree(child);
+        }
+
+        Collections.reverse(root.children);
+    }
+
+    public static void removesLeavesOfTree(Node root) {
+        Stack<Node> st = new Stack<>();
+        st.add(root);
+
+        int count = 0;
+        while (!st.isEmpty()) {
+            Node removedNode = st.pop();
+
+            if (removedNode.children.size() == 0) {
+                count = count+1;
+            }
+
+            for (Node child : removedNode.children) {
+                st.add(child);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int[] a = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1,
                 90, -1, -1, 40, 100, -1, -1, -1 };
         // int[] a = { 10, 20, -1, 30, -1, -1 };
 
         Node root = tree(a);
-        levelOrderTraversalLineWise(root);
-        System.out.println();
-        levelOrderLineWiseZigZagTraversal(root);
+        display(root);
+        System.out.println("After Mirror:-");
+        mirrorOfAGenericTree(root);
+        display(root);
     }
 }
