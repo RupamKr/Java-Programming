@@ -266,20 +266,27 @@ public class GenericTree {
     }
 
     public static void removesLeavesOfTree(Node root) {
-        Stack<Node> st = new Stack<>();
-        st.add(root);
-
-        int count = 0;
-        while (!st.isEmpty()) {
-            Node removedNode = st.pop();
-
-            if (removedNode.children.size() == 0) {
-                count = count+1;
+        /*
+         * we have to remove our leaves in pre-order
+         * if we do it in post order, it will remove the nodes which are not leaves
+         * 
+         * we will use recursion to solve this problem
+         * here one more thing to keep in mind
+         * if we are removing form arraylist, remove elements from last of arraylist
+         * here logic is, when we remove the size also get decreased, and we will miss
+         * some elements
+         * which are not even test,
+         * to avoid this problem , remove the elements from last of arraylist;
+         */
+        for (int i = root.children.size() - 1; i >= 0; i--) {
+            Node child = root.children.get(i);
+            if (child.children.size() == 0) {
+                root.children.remove(child);
             }
+        }
 
-            for (Node child : removedNode.children) {
-                st.add(child);
-            }
+        for (Node child : root.children) {
+            removesLeavesOfTree(child);
         }
     }
 
@@ -289,9 +296,7 @@ public class GenericTree {
         // int[] a = { 10, 20, -1, 30, -1, -1 };
 
         Node root = tree(a);
-        display(root);
-        System.out.println("After Mirror:-");
-        mirrorOfAGenericTree(root);
-        display(root);
+        removesLeavesOfTree(root);
+        levelOrderTraversalLineWise(root);
     }
 }
