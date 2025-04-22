@@ -277,6 +277,9 @@ public class GenericTree {
          * some elements
          * which are not even test,
          * to avoid this problem , remove the elements from last of arraylist;
+         * 
+         * concurrent modification exception in java :- when we remove anything from arraylist
+         * then this exception will come,
          */
         for (int i = root.children.size() - 1; i >= 0; i--) {
             Node child = root.children.get(i);
